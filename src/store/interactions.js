@@ -18,6 +18,9 @@ import {
     depositRequest,
     depositSuccess,
     depositFail,
+    withdrawRequest,
+    withdrawSuccess,
+    withdrawFail,
     swapRequest,
     swapSuccess,
     swapFail
@@ -108,6 +111,26 @@ export const addLiquidity = async (provider, amm, tokens, amounts, dispatch) => 
         dispatch(depositFail())
     }
 
+}
+
+// ------------------------------------------------------------------------------------
+// REMOVE LIQUIDITY
+export const removeLiquidity = async (provider, amm, shares, dispatch) => {
+    try {
+
+        dispatch(withdrawRequest())
+
+        let transaction
+
+        const signer = await provider.getSigner()
+
+        transaction = await amm.connect(signer).removeLiquidity(shares)
+        await transaction.wait()
+
+        dispatch(withdrawSuccess(transaction.hash))
+    } catch (error) {
+        dispatch(withdrawFail())
+    }
 }
 
 // ------------------------------------------------------------------------------------
