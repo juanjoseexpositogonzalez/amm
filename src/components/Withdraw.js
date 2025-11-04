@@ -62,7 +62,7 @@ const Withdraw = () => {
 
                         <Row>
                             <Form.Text className='text-end my-2' muted>
-                                Shares: {shares}
+                                Shares: {shares ? shares : 0}
                             </Form.Text>
                             <InputGroup>
                                 <Form.Control
